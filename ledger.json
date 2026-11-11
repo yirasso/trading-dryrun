@@ -1,0 +1,28 @@
+{
+  "start_balance": 5000.0,
+  "started": "2026-11-11",
+  "trades": [
+    {
+      "id": "DRYRUN-2026-11-11-AAPL-0950",
+      "date": "2026-11-11",
+      "symbol": "AAPL",
+      "qty": 10,
+      "entry": 353.68,
+      "entry_time": "09:50",
+      "entry_bar": "09:45",
+      "stop": 351.38,
+      "target": 358.28,
+      "max_loss": 23.0,
+      "timemachine": "Close to break-even: at 2R the target has to come first in 33 % of the replays that hit one side; it did in 35 % (target first 24.9 % vs stop first 45.6 %).",
+      "status": "open"
+    }
+  ],
+  "days": {
+    "2026-11-11": {
+      "premarket": false,
+      "summary": false,
+      "scans": 1
+    }
+  },
+  "universe_date": "2026-11-11"
+}

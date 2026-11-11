@@ -1,0 +1,47 @@
+{
+  "orders": [
+    {
+      "at": "2026-11-11T09:50:00-05:00",
+      "date": "2026-11-11",
+      "index": 1,
+      "fingerprint": "c70b0fdfa8a15573",
+      "symbol": "AAPL",
+      "side": "buy",
+      "qty": "10",
+      "kind": "entry",
+      "max_loss": 23.0,
+      "stop": 351.38,
+      "plain": "BUY 10 AAPL, market, good for today / stop-loss 351.38 / take-profit 358.28 / max loss about $23 if the stop fills at 351.38 (it can fill worse in a fast market)",
+      "status": "approved",
+      "reply": "yes",
+      "paper": true,
+      "broker": "alpaca"
+    },
+    {
+      "at": "2026-11-11T09:50:00-05:00",
+      "date": "2026-11-11",
+      "index": 1,
+      "fingerprint": "c70b0fdfa8a15573",
+      "symbol": "AAPL",
+      "side": "buy",
+      "plain": "BUY 10 AAPL, market, good for today / stop-loss 351.38 / take-profit 358.28 / max loss about $23 if the stop fills at 351.38 (it can fill worse in a fast market)",
+      "status": "placed",
+      "qty": "10",
+      "kind": "entry",
+      "max_loss": 23.0,
+      "stop": 351.38,
+      "broker_order_id": "DRYRUN-2026-11-11-AAPL-0950",
+      "note": "dry run: no broker, paper fill at the trigger price"
+    },
+    {
+      "at": "2026-11-11T09:50:00-05:00",
+      "date": "2026-11-11",
+      "status": "filled",
+      "symbol": "AAPL",
+      "side": "buy",
+      "qty": "10",
+      "price": 353.68,
+      "plain": "BUY 10 AAPL at 353.68"
+    }
+  ]
+}

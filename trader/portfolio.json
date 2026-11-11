@@ -1,0 +1,17 @@
+{
+  "cash": 1463.2,
+  "positions": [
+    {
+      "ticker": "AAPL",
+      "shares": 10.0,
+      "lots": [
+        {
+          "id": "AAPL-1",
+          "date": "2026-11-11",
+          "shares": 10.0,
+          "cost": 3536.8
+        }
+      ]
+    }
+  ]
+}

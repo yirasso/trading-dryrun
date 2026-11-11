@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-11",
+  "now_new_york": "2026-11-11 09:50",
+  "paper": true,
+  "results": [
+    {
+      "index": 1,
+      "symbol": "AAPL",
+      "side": "buy",
+      "kind": "entry",
+      "amount": "10 shares",
+      "value_usd": 3536.8,
+      "entry_ref": 353.68,
+      "entry_ref_from": "plan",
+      "stop": 351.38,
+      "target": 358.28,
+      "risk_per_share": 2.3,
+      "max_loss": 23.0,
+      "reward_risk": 2.0,
+      "fingerprint": "c70b0fdfa8a15573",
+      "verdict": "PASS",
+      "reasons": [],
+      "warnings": [],
+      "info": [
+        "entry 353.68 (the plan's entry), stop 351.38, target 358.28: risk 2.30 a share",
+        "max loss $23 (limit $50), reward:risk 2.00 (min 1)",
+        "today before this: 0 of 3 trades, $0 of $150 daily loss"
+      ]
+    }
+  ],
+  "pass": 1,
+  "block": 0,
+  "warnings": [],
+  "cash_after": 1463.2,
+  "today": {
+    "orders_placed": 0,
+    "entries_placed": 0,
+    "loss_at_risk": 0.0,
+    "day_trades_5d": null
+  },
+  "checked_at": "2026-11-11T18:44:25Z",
+  "orders_file": "trader/orders.json"
+}

@@ -1,0 +1,28 @@
+{
+  "created_by": "trader-exit",
+  "symbol": "AAPL",
+  "side": "buy",
+  "date": "2026-11-11",
+  "setup": "orb",
+  "entry": 353.68,
+  "entry_time": "9:50 AM",
+  "entry_bar": 3,
+  "interval": "5m",
+  "opening_range": {
+    "high": 353.43,
+    "low": 349.33,
+    "minutes": 15
+  },
+  "stop": 351.38,
+  "stop_rule": "or_mid",
+  "stop_label": "opening-range midpoint",
+  "target": 358.28,
+  "target_r": 2.0,
+  "target_label": "2R (two times the risk)",
+  "risk_per_share": 2.3,
+  "reward_risk": 2.0,
+  "flat_by": "15:55",
+  "stop_detail": "($353.43 + $349.33) / 2 = $351.38",
+  "created_at": "2026-11-11T14:50:00Z",
+  "note": "A stop is a plan, not a guarantee: a gap or a fast market can fill past it."
+}
