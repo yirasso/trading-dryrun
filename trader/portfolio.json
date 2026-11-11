@@ -1,15 +1,15 @@
 {
-  "cash": 1463.2,
+  "cash": 32.43,
   "positions": [
     {
-      "ticker": "AAPL",
-      "shares": 10.0,
+      "ticker": "AFRM",
+      "shares": 1.0,
       "lots": [
         {
-          "id": "AAPL-1",
+          "id": "AFRM-1",
           "date": "2026-11-11",
-          "shares": 10.0,
-          "cost": 3536.8
+          "shares": 1.0,
+          "cost": 67.57
         }
       ]
     }

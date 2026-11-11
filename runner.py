@@ -184,14 +184,55 @@ def manage_open(led, cfg, date, now_min, closes_min, final=False):
             close_trade(t, outcome, cfg, t["date"])
 
 
+# ------------------------------------------------------------------ affordable universe
+AFFORDABLE = "trader/universe-affordable.txt"
+MIN_PRICE, MIN_VOLUME = 5.0, 500_000
+
+
+def max_price(cfg, led):
+    """The most one whole share may cost: the position cap, the order cap, or the cash after
+    the buffer, whichever is smallest (the same limits trader-budget sizes with)."""
+    budget = float(cfg.get("budget", 100))
+    cash = jload("trader/portfolio.json", {}).get("cash", balance(led))
+    return min(budget * float(cfg.get("max_position_pct", 90)) / 100,
+               float(cfg.get("max_order_usd", budget)),
+               cash - budget * float(cfg.get("cash_buffer_pct", 10)) / 100)
+
+
+def build_affordable(led, cfg, date):
+    """Once a day: liquid stocks a whole share of which fits the budget (Yahoo spark, 20 a request)."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("scan", os.path.join(SKILLS, "trader-scanner", "scan.py"))
+    scan = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(scan)
+    syms = [l.split("|")[0] for l in open("trader/universe.txt", encoding="utf-8") if l.strip()]
+    data, failed = scan.fetch_spark(syms, "5d", "1d", 0.3)
+    top = max_price(cfg, led)
+    keep = []
+    for s, ser in data.items():
+        meta = ser.get("meta") or {}
+        p, v = meta.get("regularMarketPrice"), meta.get("regularMarketVolume") or 0
+        if p and MIN_PRICE <= p <= top and v >= MIN_VOLUME:
+            keep.append("%s|" % s)
+    with open(AFFORDABLE, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(sorted(keep)) + "\n")
+    led["affordable_date"] = date
+    log("Affordable universe: %d of %d stocks between $%.0f and $%.2f with volume >= %d (%d failed)."
+        % (len(keep), len(syms), MIN_PRICE, top, MIN_VOLUME, len(failed)))
+    journal(date, "Affordable universe: %d stocks priced $%.0f-$%.2f" % (len(keep), MIN_PRICE, top))
+
+
 # ------------------------------------------------------------------ entries
 def try_entries(led, cfg, date, now_min):
     max_trades = int(cfg.get("max_trades_per_day", 3))
     today = [t for t in led["trades"] if t["date"] == date]
     if len(today) >= max_trades or any(t["status"] == "open" for t in led["trades"]):
         return
+    if led.get("affordable_date") != date or not os.path.exists(AFFORDABLE):
+        build_affordable(led, cfg, date)
     if not SCANNED:                                   # one ORB scan per run, reused after an exit
-        rc, out = tool("trader-scanner/scan.py", "orb", "--max-confirm", "60", "--quiet")
+        rc, out = tool("trader-scanner/scan.py", "orb", "--universe", AFFORDABLE,
+                       "--max-confirm", "80", "--quiet")
         day(led, date)["scans"] += 1
         SCANNED.append(out)
     out = SCANNED[0]
@@ -202,8 +243,9 @@ def try_entries(led, cfg, date, now_min):
     hits = sorted(wl.get("hits") or [], key=lambda h: hm(h.get("bar_start", "23:59")))
     after = max([hm(t["exit_time"]) for t in today if t.get("exit_time")] or [0])
     traded = {t["symbol"] for t in today} | set(day(led, date).get("skipped", []))
+    top = max_price(cfg, led)
     cands = [h for h in hits if h["symbol"] not in traded and hm(h["bar_start"]) + 5 > after
-             and hm(h["bar_start"]) + 5 <= hm(ENTRY_UNTIL)]
+             and hm(h["bar_start"]) + 5 <= hm(ENTRY_UNTIL) and float(h.get("price") or 0) <= top]
     log("ORB scan: %d hits, %d new candidates after %s." % (len(hits), len(cands), fmt(after)))
     for h in cands[:MAX_CANDIDATES]:
         if open_trade(led, cfg, date, h["symbol"], now_min):
@@ -343,6 +385,7 @@ def main():
         d = day(led, date)
         if now_min < opens and not d["premarket"]:
             premarket(led, date)
+            build_affordable(led, cfg, date)
             d["premarket"] = True
         if now_min >= opens + 5:
             manage_open(led, cfg, date, now_min, closes)
