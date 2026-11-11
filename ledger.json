@@ -14,13 +14,17 @@
       "target": 69.55,
       "max_loss": 0.99,
       "timemachine": "Leans toward the stop: at 2R the target has to come first in 33 % of the replays that hit one side; it did in 26 % (target first 20.3 % vs stop first 56.7 %).",
-      "status": "open"
+      "status": "closed",
+      "exit": 67.53,
+      "exit_time": "15:55",
+      "exit_reason": "flat by close",
+      "pnl": -0.04
     }
   ],
   "days": {
     "2026-11-11": {
       "premarket": false,
-      "summary": false,
+      "summary": true,
       "scans": 1
     }
   },

@@ -1,17 +1,4 @@
 {
-  "cash": 32.43,
-  "positions": [
-    {
-      "ticker": "AFRM",
-      "shares": 1.0,
-      "lots": [
-        {
-          "id": "AFRM-1",
-          "date": "2026-11-11",
-          "shares": 1.0,
-          "cost": 67.57
-        }
-      ]
-    }
-  ]
+  "cash": 99.96,
+  "positions": []
 }

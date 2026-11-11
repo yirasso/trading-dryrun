@@ -42,6 +42,16 @@
       "qty": "1",
       "price": 67.57,
       "plain": "BUY 1 AFRM at 67.57"
+    },
+    {
+      "at": "2026-11-11T16:37:09-05:00",
+      "date": "2026-11-11",
+      "status": "filled",
+      "symbol": "AFRM",
+      "side": "sell",
+      "qty": "1",
+      "price": 67.53,
+      "plain": "SELL 1 AFRM at 67.53"
     }
   ]
 }
