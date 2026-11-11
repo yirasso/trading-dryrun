@@ -15,5 +15,5 @@ schedule (GitHub Actions, weekdays 11:00–21:10 Lisbon) with **no broker and no
 Limits: fills at the trigger price with no slippage or fees, stop first when one bar touches
 both stop and target, free delayed Yahoo data. A real account will do somewhat worse.
 
-Run by hand: `python runner.py` (with `DTS_DIR` pointing at a day-trader-skill checkout), or
+Run by hand: `python runner.py` (the tools are vendored in `skills/`).
 "Run workflow" in the Actions tab.
