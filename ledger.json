@@ -26,8 +26,13 @@
       "premarket": false,
       "summary": true,
       "scans": 1
+    },
+    "2026-11-12": {
+      "premarket": true,
+      "summary": false,
+      "scans": 0
     }
   },
   "universe_date": "2026-11-11",
-  "affordable_date": "2026-11-11"
+  "affordable_date": "2026-11-12"
 }
