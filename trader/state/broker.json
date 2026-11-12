@@ -148,6 +148,16 @@
       "qty": "1",
       "price": 45.47,
       "plain": "BUY 1 DVN at 45.47"
+    },
+    {
+      "at": "2026-11-12T13:37:26-05:00",
+      "date": "2026-11-12",
+      "status": "filled",
+      "symbol": "DVN",
+      "side": "sell",
+      "qty": "1",
+      "price": 46.25,
+      "plain": "SELL 1 DVN at 46.25"
     }
   ]
 }
