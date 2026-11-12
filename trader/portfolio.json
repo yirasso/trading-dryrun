@@ -1,4 +1,17 @@
 {
-  "cash": 99.96,
-  "positions": []
+  "cash": 52.94,
+  "positions": [
+    {
+      "ticker": "DVN",
+      "shares": 1.0,
+      "lots": [
+        {
+          "id": "DVN-1",
+          "date": "2026-11-12",
+          "shares": 1.0,
+          "cost": 45.47
+        }
+      ]
+    }
+  ]
 }

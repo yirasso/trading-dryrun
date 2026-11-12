@@ -1,22 +1,22 @@
 {
   "created_by": "trader-entry",
-  "symbol": "AFRM",
+  "symbol": "DVN",
   "setup": "orb",
   "side": "buy",
-  "date": "2026-11-11",
+  "date": "2026-11-12",
   "status": "triggered",
-  "time": "9:50 AM",
-  "bar_start": "09:45",
-  "bar_index": 3,
-  "price": 67.57,
-  "level": 67.35,
+  "time": "10:00 AM",
+  "bar_start": "09:55",
+  "bar_index": 5,
+  "price": 45.47,
+  "level": 45.27,
   "interval": "5m",
   "opening_range": {
-    "high": 67.35,
-    "low": 65.82,
+    "high": 45.27,
+    "low": 44.9,
     "minutes": 15
   },
   "source": "yahoo",
-  "checked_at": "2026-11-11T19:19:27Z",
-  "reason": "the 9:45 bar closed above the range high"
+  "checked_at": "2026-11-12T15:39:19Z",
+  "reason": "the 9:55 bar closed above the range high"
 }
