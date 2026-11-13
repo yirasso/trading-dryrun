@@ -151,6 +151,12 @@ def settle(trade, date, now_min, closes_min, final=False):
         if start >= flat:
             break
         last_close = (start, c)
+        if trade.get("side") == "short":            # mirror: the stop is above, the target below
+            if h >= trade["stop"]:
+                return "stop", round(max(trade["stop"], o), 2), fmt(start + 5)
+            if l <= trade["target"]:
+                return "target", round(min(trade["target"], o), 2), fmt(start + 5)
+            continue
         if l <= trade["stop"]:                      # stop first if both in one bar
             return "stop", round(min(trade["stop"], o), 2), fmt(start + 5)
         if h >= trade["target"]:
@@ -165,11 +171,13 @@ def settle(trade, date, now_min, closes_min, final=False):
 def close_trade(trade, outcome, cfg, date):
     reason, price, at = outcome
     if trade.get("kind") == "cfd":                  # no broker tool: the spread was the cost
-        gross = (price - trade["entry"]) * trade["qty"] - trade["spread_cost"]
+        move = trade["entry"] - price if trade.get("side") == "short" else price - trade["entry"]
+        gross = move * trade["qty"] - trade["spread_cost"]
         fx = round(abs(gross) * float(cfg.get("fx_fee_pct", 0)) / 100, 2)   # T212: 0.5% of the result
         trade["fx_fee"] = fx
-        out = "CFD %s: sold %s units at %.2f (mid); spread cost %.2f, FX fee %.2f" % (
-            trade["name"], q(trade["qty"]), price, trade["spread_cost"], fx)
+        out = "CFD %s: %s %s units at %.2f (mid); spread cost %.2f, FX fee %.2f" % (
+            trade["name"], "bought back" if trade.get("side") == "short" else "sold",
+            q(trade["qty"]), price, trade["spread_cost"], fx)
         pnl = gross - fx
     else:
         rc, out = tool("trader-broker/ticket.py", "fill", "--symbol", trade["symbol"], "--side", "sell",
@@ -244,76 +252,129 @@ def cfd_mode(cfg):
     return cfg.get("mode") == "cfd"
 
 
-def cfd_signals(cfg, date, traded):
-    """trader-entry on each instrument: [(trigger_minute, sym, entry_doc_path, output)]; an
-    instrument whose setup expired today is reported with trigger None."""
-    out_list = []
+def orb_first(sym, date, now_min, cfg):
+    """The first completed 5-minute bar after the 15-minute opening range that closes outside it.
+    -> ("long" | "short", trigger_min, bar_start, close, or_high, or_low), ("expired", ...) or None."""
+    until = hm(cfg.get("no_entries_after", ENTRY_UNTIL))
+    bars = [b for b in bars_5m(sym, date) if b[0] + 5 <= now_min]
+    rng = [b for b in bars if 570 <= b[0] < 585]
+    if len(rng) < 3:
+        return None
+    hi, lo = max(b[2] for b in rng), min(b[3] for b in rng)
+    for start, o, h, l, c in bars:
+        if start < 585:
+            continue
+        if start + 5 > until:
+            return ("expired", None, None, None, hi, lo)
+        if c > hi:
+            return ("long", start + 5, fmt(start), c, hi, lo)
+        if c < lo:
+            return ("short", start + 5, fmt(start), c, hi, lo)
+    return ("expired", None, None, None, hi, lo) if now_min >= until else None
+
+
+def cfd_signals(cfg, date, now_min, traded):
+    """[(trigger_min | None, sym, side, info)]: the first opening-range breakout of each instrument,
+    up (long, run through trader-entry) or down (short, computed here: the pack plans longs only)."""
+    sigs = []
     for sym in cfg["instruments"]:
         if sym in traded:
             continue
-        path = "trader/entry-%s.json" % sym.replace("^", "").replace("=", "")
-        if os.path.exists(path):
-            os.remove(path)
-        rc, out = tool("trader-entry/entry.py", "check", sym, "--write", path)
-        ent = jload(path, {})
-        if ent.get("status") == "triggered" and ent.get("date") == date:
-            out_list.append((hm(ent["bar_start"]) + 5, sym, path, out))
-        elif ent.get("status") == "expired":
-            out_list.append((None, sym, path, out))
-    return out_list
+        first = orb_first(sym, date, now_min, cfg)
+        if first is None:
+            continue
+        side, trig, bar_start, close, hi, lo = first
+        if side == "long":
+            path = "trader/entry-%s.json" % sym.replace("^", "").replace("=", "")
+            if os.path.exists(path):
+                os.remove(path)
+            rc, out = tool("trader-entry/entry.py", "check", sym, "--write", path)
+            ent = jload(path, {})
+            if ent.get("status") == "triggered" and ent.get("date") == date:
+                sigs.append((hm(ent["bar_start"]) + 5, sym, "long", (path, out)))
+            else:
+                sigs.append((None, sym, "long", (None, out)))
+        elif side == "short":
+            out = ("%s ORB short: opening range 9:30-9:45 high %.2f, low %.2f; the %s bar closed at "
+                   "%.2f, below the range low." % (sym, hi, lo, bar_start, close))
+            sigs.append((trig, sym, "short", {"bar_start": bar_start, "entry": round(close, 2),
+                                              "or_high": hi, "or_low": lo, "out": out}))
+        else:
+            sigs.append((None, sym, "expired", (None, "no breakout either way by %s" % ENTRY_UNTIL)))
+    return sigs
 
 
-def open_cfd(led, cfg, date, sym, path, out):
+def open_cfd(led, cfg, date, sym, side, info):
     """Index CFD, like Trading 212's US 500 / US Tech 100: fractional units, leverage, a spread.
+    Longs go through the pack's trader-entry / trader-exit / trader-timemachine; shorts mirror the
+    same rule (stop at the opening-range midpoint, target 2R) here, with no Time Machine run.
     The pack's trader-budget / trader-risk / trader-broker are built for whole shares on Alpaca,
-    so the same limits are applied here instead."""
+    so their limits are applied here instead."""
+    import math
     inst = cfg["instruments"][sym]
     name = inst["name"]
-    ent = jload(path, {})
-    trig = hm(ent["bar_start"]) + 5
-    N = "%s %s" % (date, fmt(trig))
-    rc, out_exit = tool("trader-exit/exit.py", "plan", "--from", path, "--write", "--now", N)
-    if rc != 0:
-        return skip(led, date, sym, "exit plan refused", out_exit)
-    _, out_tm = tool("trader-timemachine/timemachine.py", "run", "--write", "--until", FLAT_BY, "--now", N)
-    tm = jload("trader/timemachine.json", {})
-    plan = jload("trader/plan.json", {})
-    entry, stop, target = float(plan["entry"]), float(plan["stop"]), float(plan["target"])
     spread = float(inst.get("spread", 0))
+    if side == "long":
+        path, out = info
+        ent = jload(path, {})
+        bar_start = ent["bar_start"]
+        trig = hm(bar_start) + 5
+        N = "%s %s" % (date, fmt(trig))
+        rc, out_exit = tool("trader-exit/exit.py", "plan", "--from", path, "--write", "--now", N)
+        if rc != 0:
+            return skip(led, date, sym, "exit plan refused", out_exit)
+        _, out_tm = tool("trader-timemachine/timemachine.py", "run", "--write", "--until", FLAT_BY, "--now", N)
+        verdict = jload("trader/timemachine.json", {}).get("verdict")
+        plan = jload("trader/plan.json", {})
+        entry, stop, target = float(plan["entry"]), float(plan["stop"]), float(plan["target"])
+        risk = entry - stop
+    else:
+        bar_start = info["bar_start"]
+        trig = hm(bar_start) + 5
+        entry = info["entry"]
+        stop = math.ceil((info["or_high"] + info["or_low"]) / 2 * 100) / 100   # midpoint, rounded up
+        risk = round(stop - entry, 2)
+        target = round(entry - 2 * risk, 2)
+        out = info["out"]
+        out_exit = ("Exit plan (short): entry %.2f, stop %.2f (opening-range midpoint, rounded up), "
+                    "target %.2f (2R), risk %.2f a unit, flat by %s ET." % (entry, stop, target, risk, FLAT_BY))
+        out_tm = "Time Machine: not run (the pack's Time Machine replays longs only)."
+        verdict = "n/a (short)"
     bal = balance(led)
     usable = bal * (1 - float(cfg.get("cash_buffer_pct", 10)) / 100)
     lev = float(cfg.get("leverage", 20))
     max_loss = float(cfg["max_loss_per_trade_usd"])
-    by_risk = max_loss / (entry - stop + spread)            # loss at the stop, spread included
-    by_margin = usable * lev / entry                         # margin = notional / leverage
-    qty = int(min(by_risk, by_margin) * 100) / 100.0         # 0.01-unit steps
+    by_risk = max_loss / (risk + spread) if risk > 0 else 0   # loss at the stop, spread included
+    by_margin = usable * lev / entry                           # margin = notional / leverage
+    qty = int(min(by_risk, by_margin) * 100) / 100.0           # 0.01-unit steps
     today = [t for t in led["trades"] if t["date"] == date]
     lost_today = -sum(min(t.get("pnl") or 0, 0) for t in today)
-    worst = round(qty * (entry - stop + spread), 2)
+    worst = round(qty * (risk + spread), 2)
     checks = [
         (hm(cfg.get("no_entries_before", "09:45")) <= trig <= hm(cfg.get("no_entries_after", "15:30")),
          "outside the entry window"),
-        ((target - entry) / (entry - stop) >= float(cfg.get("min_reward_risk", 1)), "reward:risk too low"),
+        (risk >= 2 * spread, "stop too tight for the spread"),
+        (risk > 0 and abs(target - entry) / risk >= float(cfg.get("min_reward_risk", 1)), "reward:risk too low"),
         (qty >= 0.01, "too small: under 0.01 units"),
         (lost_today + worst <= float(cfg.get("max_daily_loss_usd", 15)), "daily loss limit"),
     ]
     why = "\n".join("BLOCK: " + m for ok, m in checks if not ok)
-    sizing = ("%s: %s units at %.2f (notional $%.2f, margin $%.2f at %g:1).\n"
+    sizing = ("%s %s: %s units at %.2f (notional $%.2f, margin $%.2f at %g:1).\n"
               "Limits: risk $%.2f / (%.2f stop distance + %.2f spread) = %.2f units; "
               "margin $%.2f x %g / %.2f = %.2f units.\nLoss at the stop about $%.2f, spread cost $%.2f."
-              % (name, q(qty), entry, qty * entry, qty * entry / lev, lev, max_loss, entry - stop, spread,
-                 by_risk, usable, lev, entry, by_margin, worst, qty * spread))
+              % (name, side.upper(), q(qty), entry, qty * entry, qty * entry / lev, lev, max_loss, risk,
+                 spread, by_risk, usable, lev, entry, by_margin, worst, qty * spread))
     if why:
         return skip(led, date, sym, why.replace("BLOCK: ", ""), sizing + "\n" + why)
     trade = {"id": "DRYRUN-%s-%s-%s" % (date, sym, fmt(trig).replace(":", "")), "kind": "cfd",
-             "name": name, "date": date, "symbol": sym, "qty": qty, "entry": entry,
-             "entry_time": fmt(trig), "entry_bar": ent["bar_start"], "stop": stop, "target": target,
+             "side": side, "name": name, "date": date, "symbol": sym, "qty": qty, "entry": entry,
+             "entry_time": fmt(trig), "entry_bar": bar_start, "stop": stop, "target": target,
              "max_loss": worst, "spread_cost": round(qty * spread, 2),
-             "timemachine": tm.get("verdict"), "status": "open"}
+             "timemachine": verdict, "status": "open"}
     led["trades"].append(trade)
-    log("OPEN %s %s x%s at %.2f (%s), stop %.2f, target %.2f" % (
-        date, name, q(qty), entry, fmt(trig), stop, target))
-    journal(date, "Entry %s (CFD) x%s at %.2f (%s ET)" % (name, q(qty), entry, fmt(trig)),
+    log("OPEN %s %s %s x%s at %.2f (%s), stop %.2f, target %.2f" % (
+        date, name, side.upper(), q(qty), entry, fmt(trig), stop, target))
+    journal(date, "Entry %s %s (CFD) x%s at %.2f (%s ET)" % (name, side.upper(), q(qty), entry, fmt(trig)),
             "\n\n".join([out, out_exit, out_tm, sizing]))
     return True
 
@@ -327,13 +388,14 @@ def try_entries(led, cfg, date, now_min):
     if cfd_mode(cfg):
         after = max([hm(t["exit_time"]) for t in today if t.get("exit_time")] or [0])
         traded = {t["symbol"] for t in today} | set(day(led, date).get("skipped", []))
-        sigs = cfd_signals(cfg, date, traded)
-        for trig, sym, path, out in sorted(sigs, key=lambda s: s[0] or 9999):
+        sigs = cfd_signals(cfg, date, now_min, traded)
+        for trig, sym, side, info in sorted(sigs, key=lambda x: x[0] or 9999):
+            text = info["out"] if isinstance(info, dict) else info[1]
             if trig is None:
-                skip(led, date, sym, "no breakout before the entry window closed", out)
+                skip(led, date, sym, "no usable breakout before the entry window closed", text)
             elif trig <= after:     # its first breakout came while another trade was open
-                skip(led, date, sym, "breakout at %s, while another trade was open" % fmt(trig), out)
-            elif open_cfd(led, cfg, date, sym, path, out):
+                skip(led, date, sym, "%s breakout at %s, while another trade was open" % (side, fmt(trig)), text)
+            elif open_cfd(led, cfg, date, sym, side, info):
                 return True
         return False
     if led.get("affordable_date") != date or not os.path.exists(AFFORDABLE):
@@ -466,13 +528,14 @@ def write_balance(led):
            "|---|---|---|---|---|---|---|---|---|---|"]
     for t in led["trades"]:
         md.append("| %s %s | %s | %s | %.2f | %.2f | %.2f | %s | %s | %s | %s |" % (
-            t["date"], t["entry_time"], label(t), q(t["qty"]), t["entry"], t["stop"], t["target"],
+            t["date"], t["entry_time"], label(t) + (" SHORT" if t.get("side") == "short" else ""), q(t["qty"]), t["entry"], t["stop"], t["target"],
             t.get("exit", "open"), t.get("exit_reason", ""),
             "%+.2f" % t["pnl"] if t.get("pnl") is not None else "", (t.get("timemachine") or "")[:90]))
     md += ["", "Fills are simulated at the trigger price; stops and targets are played out on",
            "5-minute bars (stop first when one bar touches both). CFD costs as in Trading 212's Index CFD",
            "costs: average spread US Tech 100 1.12 pt, US 500 0.42 pt (T212 instrument list), FX fee 0.5%",
            "of each result (USD to EUR), 20:1 leverage; closed by 15:55 NY so no overnight fee.",
+           "Long and short: the first opening-range breakout of the day, up or down.",
            "Stock trades before the switch paid no fees.", ""]
     with open("BALANCE.md", "w", encoding="utf-8") as fh:
         fh.write("\n".join(md))
