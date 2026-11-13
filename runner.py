@@ -165,9 +165,12 @@ def settle(trade, date, now_min, closes_min, final=False):
 def close_trade(trade, outcome, cfg, date):
     reason, price, at = outcome
     if trade.get("kind") == "cfd":                  # no broker tool: the spread was the cost
-        out = "CFD %s: sold %s units at %.2f (mid); spread cost %.2f" % (
-            trade["name"], q(trade["qty"]), price, trade["spread_cost"])
-        pnl = (price - trade["entry"]) * trade["qty"] - trade["spread_cost"]
+        gross = (price - trade["entry"]) * trade["qty"] - trade["spread_cost"]
+        fx = round(abs(gross) * float(cfg.get("fx_fee_pct", 0)) / 100, 2)   # T212: 0.5% of the result
+        trade["fx_fee"] = fx
+        out = "CFD %s: sold %s units at %.2f (mid); spread cost %.2f, FX fee %.2f" % (
+            trade["name"], q(trade["qty"]), price, trade["spread_cost"], fx)
+        pnl = gross - fx
     else:
         rc, out = tool("trader-broker/ticket.py", "fill", "--symbol", trade["symbol"], "--side", "sell",
                        "--qty", str(trade["qty"]), "--price", "%.2f" % price, "--date", date)
@@ -467,8 +470,9 @@ def write_balance(led):
             t.get("exit", "open"), t.get("exit_reason", ""),
             "%+.2f" % t["pnl"] if t.get("pnl") is not None else "", (t.get("timemachine") or "")[:90]))
     md += ["", "Fills are simulated at the trigger price; stops and targets are played out on",
-           "5-minute bars (stop first when one bar touches both). CFD trades pay an estimated spread",
-           "(US 500 0.8 pt, US Tech 100 2 pt), 20:1 leverage, closed by 15:55 NY so no overnight fee.",
+           "5-minute bars (stop first when one bar touches both). CFD costs as in Trading 212's Index CFD",
+           "KID (08.06.2026): spread US Tech 100 1.2 pt (KID example), US 500 0.5 pt (estimate), FX fee 0.5%",
+           "of each result (USD to EUR), 20:1 leverage; closed by 15:55 NY so no overnight fee.",
            "Stock trades before the switch paid no fees.", ""]
     with open("BALANCE.md", "w", encoding="utf-8") as fh:
         fh.write("\n".join(md))
