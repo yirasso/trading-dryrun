@@ -531,7 +531,7 @@ def load_plan(a, now_utc):
 def normalize_plan(raw, src="flags"):
     """A plan dict (trader/plan.json shape) -> the checked plan the time machine runs."""
     sym = str(raw.get("symbol") or "").strip().upper()
-    if not re.match(r"^\^?[A-Z][A-Z0-9.\-]{0,9}$", sym):   # local change: allow ^GSPC / ^NDX
+    if not re.match(r"^\^?[A-Z][A-Z0-9.\-=]{0,9}$", sym):   # local change: allow ^NDX, NQ=F
         raise TMError("the plan needs a ticker symbol, got %r" % raw.get("symbol"))
     side = str(raw.get("side") or "buy").lower()
     if side not in ("buy", "sell"):

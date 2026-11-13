@@ -25,13 +25,13 @@
   "mode": "cfd",
   "leverage": 20,
   "instruments": {
-    "^GSPC": {
-      "name": "US 500",
-      "spread": 0.8
-    },
-    "^NDX": {
+    "NQ=F": {
       "name": "US Tech 100",
       "spread": 2.0
+    },
+    "ES=F": {
+      "name": "US 500",
+      "spread": 0.8
     }
   }
 }

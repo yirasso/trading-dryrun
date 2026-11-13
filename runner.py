@@ -241,19 +241,35 @@ def cfd_mode(cfg):
     return cfg.get("mode") == "cfd"
 
 
-def open_cfd(led, cfg, date, sym, now_min):
+def cfd_signals(cfg, date, traded):
+    """trader-entry on each instrument: [(trigger_minute, sym, entry_doc_path, output)]; an
+    instrument whose setup expired today is reported with trigger None."""
+    out_list = []
+    for sym in cfg["instruments"]:
+        if sym in traded:
+            continue
+        path = "trader/entry-%s.json" % sym.replace("^", "").replace("=", "")
+        if os.path.exists(path):
+            os.remove(path)
+        rc, out = tool("trader-entry/entry.py", "check", sym, "--write", path)
+        ent = jload(path, {})
+        if ent.get("status") == "triggered" and ent.get("date") == date:
+            out_list.append((hm(ent["bar_start"]) + 5, sym, path, out))
+        elif ent.get("status") == "expired":
+            out_list.append((None, sym, path, out))
+    return out_list
+
+
+def open_cfd(led, cfg, date, sym, path, out):
     """Index CFD, like Trading 212's US 500 / US Tech 100: fractional units, leverage, a spread.
     The pack's trader-budget / trader-risk / trader-broker are built for whole shares on Alpaca,
     so the same limits are applied here instead."""
     inst = cfg["instruments"][sym]
     name = inst["name"]
-    rc, out = tool("trader-entry/entry.py", "check", sym, "--write")
-    ent = jload("trader/entry.json", {})
-    if rc != 0 or ent.get("status") != "triggered" or ent.get("symbol") != sym:
-        return skip(led, date, sym, "entry not triggered", out)
+    ent = jload(path, {})
     trig = hm(ent["bar_start"]) + 5
     N = "%s %s" % (date, fmt(trig))
-    rc, out_exit = tool("trader-exit/exit.py", "plan", "--write", "--now", N)
+    rc, out_exit = tool("trader-exit/exit.py", "plan", "--from", path, "--write", "--now", N)
     if rc != 0:
         return skip(led, date, sym, "exit plan refused", out_exit)
     _, out_tm = tool("trader-timemachine/timemachine.py", "run", "--write", "--until", FLAT_BY, "--now", N)
@@ -306,20 +322,15 @@ def try_entries(led, cfg, date, now_min):
     if len(today) >= max_trades or any(t["status"] == "open" for t in led["trades"]):
         return
     if cfd_mode(cfg):
-        if not SCANNED:
-            rc, out = tool("trader-scanner/scan.py", "orb", "--symbols", ",".join(cfg["instruments"]),
-                           "--quiet")
-            SCANNED.append(out)
-        wl = jload("trader/watchlist.json", {})
-        if not str(wl.get("as_of", "")).startswith(date):
-            return
         after = max([hm(t["exit_time"]) for t in today if t.get("exit_time")] or [0])
         traded = {t["symbol"] for t in today} | set(day(led, date).get("skipped", []))
-        hits = sorted(wl.get("hits") or [], key=lambda h: hm(h.get("bar_start", "23:59")))
-        for h in hits:
-            if h["symbol"] in traded or hm(h["bar_start"]) + 5 <= after:
-                continue
-            if open_cfd(led, cfg, date, h["symbol"], now_min):
+        sigs = cfd_signals(cfg, date, traded)
+        for trig, sym, path, out in sorted(sigs, key=lambda s: s[0] or 9999):
+            if trig is None:
+                skip(led, date, sym, "no breakout before the entry window closed", out)
+            elif trig <= after:     # its first breakout came while another trade was open
+                skip(led, date, sym, "breakout at %s, while another trade was open" % fmt(trig), out)
+            elif open_cfd(led, cfg, date, sym, path, out):
                 return True
         return False
     if led.get("affordable_date") != date or not os.path.exists(AFFORDABLE):
