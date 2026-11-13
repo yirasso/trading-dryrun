@@ -29,7 +29,7 @@
   "days": {
     "2026-11-13": {
       "premarket": true,
-      "summary": false,
+      "summary": true,
       "scans": 0,
       "skipped": [
         "ES=F"
