@@ -27,11 +27,11 @@
   "instruments": {
     "NQ=F": {
       "name": "US Tech 100",
-      "spread": 1.2
+      "spread": 1.12
     },
     "ES=F": {
       "name": "US 500",
-      "spread": 0.5
+      "spread": 0.42
     }
   },
   "fx_fee_pct": 0.5

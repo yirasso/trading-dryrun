@@ -471,7 +471,7 @@ def write_balance(led):
             "%+.2f" % t["pnl"] if t.get("pnl") is not None else "", (t.get("timemachine") or "")[:90]))
     md += ["", "Fills are simulated at the trigger price; stops and targets are played out on",
            "5-minute bars (stop first when one bar touches both). CFD costs as in Trading 212's Index CFD",
-           "KID (08.06.2026): spread US Tech 100 1.2 pt (KID example), US 500 0.5 pt (estimate), FX fee 0.5%",
+           "costs: average spread US Tech 100 1.12 pt, US 500 0.42 pt (T212 instrument list), FX fee 0.5%",
            "of each result (USD to EUR), 20:1 leverage; closed by 15:55 NY so no overnight fee.",
            "Stock trades before the switch paid no fees.", ""]
     with open("BALANCE.md", "w", encoding="utf-8") as fh:
