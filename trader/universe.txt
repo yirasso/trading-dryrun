@@ -1162,7 +1162,6 @@ CLDT|Chatham Lodging Trust (REIT) Common Shares of Beneficial Interest
 CLDX|Celldex Therapeutics, Inc. - Common Stock
 CLF|Cleveland-Cliffs Inc. Common Stock
 CLFD|Clearfield, Inc. - Common Stock
-CLGN|CollPlant Biotechnologies Ltd. - Ordinary Shares
 CLH|Clean Harbors, Inc. Common Stock
 CLIK|Click Holdings Limited - Ordinary Share
 CLIR|ClearSign Technologies Corporation - Common Stock
@@ -1330,6 +1329,7 @@ CRL|Charles River Laboratories International, Inc. Common Stock
 CRM|Salesforce, Inc. Common Stock
 CRMD|CorMedix Inc. - Common Stock
 CRML|Critical Metals Corp. - Ordinary Shares
+CRMN|Skyline Builders Group Holding Limited - Class A Ordinary Shares
 CRMT|America's Car-Mart, Inc. - Common Stock
 CRNC|Cerence Inc. - Common Stock
 CRNT|Ceragon Networks Ltd. - Ordinary Shares
@@ -2917,7 +2917,6 @@ KALU|Kaiser Aluminum Corporation - Common Stock
 KAPA|Kairos Pharma, Ltd. Common Stock
 KARD|Kardigan, Inc. - Common Stock
 KARO|Karooooo Ltd. - Ordinary shares
-KAZR|Skyline Builders Group Holding Limited - Class A Ordinary Shares
 KB|KB Financial Group Inc
 KBDC|Kayne Anderson BDC, Inc. Common Stock
 KBH|KB Home Common Stock
@@ -2977,7 +2976,6 @@ KN|Knowles Corporation Common Stock
 KNDI|Kandi Technologies Group, Inc. - Ordinary Shares
 KNF|Knife Riv Holding Co. Common Stock
 KNOP|KNOT Offshore Partners LP Common Units representing Limited Partner Interests
-KNRX|KNOREX LTD. Class A Ordinary Shares
 KNSA|Kiniksa Pharmaceuticals International, plc - Class A Ordinary Shares
 KNSL|Kinsale Capital Group, Inc. Common Stock
 KNTK|Kinetik Holdings Inc. Class A Common Stock
@@ -3322,6 +3320,7 @@ MDGL|Madrigal Pharmaceuticals, Inc. - Common Stock
 MDIA|Mediaco Holding Inc. - Class A Common Stock
 MDLN|Medline Inc. - Class A common stock
 MDLZ|Mondelez International, Inc. - Class A Common Stock
+MDRN|Modern Mining Technology Corp. Common Shares
 MDRR|Medalist Diversified, Inc. - Common Stock
 MDT|Medtronic plc. Ordinary Shares
 MDU|MDU Resources Group, Inc. Common Stock (Holding Company)
@@ -3863,7 +3862,6 @@ NXT|Nextpower Inc. - Common Stock
 NXTC|NextCure, Inc. - Common Stock
 NXTS|Nexentis Technologies Inc. - Common Stock
 NXTT|Next Technology Holding Inc. - Ordinary Shares
-NXXT|NextNRG, Inc. - Common Stock
 NYAX|Nayax Ltd. - Ordinary Shares
 NYC|American Strategic Investment Co. Class A Common Stock
 NYT|New York Times Company (The) Common Stock
@@ -3930,7 +3928,7 @@ OKYO|OKYO Pharma Limited - Ordinary Shares
 OLB|The OLB Group, Inc. - Common Stock
 OLED|Universal Display Corporation - Common Stock
 OLLI|Ollie's Bargain Outlet Holdings, Inc. - Common Stock
-OLMA|Olema Pharmaceuticals, Inc. - Common Stock
+OLMA|Olema Oncology, Inc. - Common Stock
 OLN|Olin Corporation Common Stock
 OLOX|Olenox Industries Inc. - Common Stock
 OLP|One Liberty Properties, Inc. Common Stock
@@ -3970,6 +3968,7 @@ OPCH|Option Care Health, Inc. - Common Stock
 OPEN|Opendoor Technologies Inc - Common Stock
 OPFI|OppFi Inc. Class A Common Stock
 OPHC|OptimumBank Holdings, Inc. Common Stock
+OPHI|CollPlant Biotechnologies Ltd. - Ordinary Shares
 OPI|Office Properties Income Trust - Common shares of beneficial interest
 OPK|Opko Health, Inc. - Common Stock
 OPLN|OPENLANE, Inc. Common Stock
@@ -4342,7 +4341,6 @@ PTEN|Patterson-UTI Energy, Inc. - Common Stock
 PTGX|Protagonist Therapeutics, Inc. - Common Stock
 PTHS|Pelthos Therapeutics Inc. Common Stock
 PTIV|Pineapple Financial Inc. Common Stock
-PTLE|PTL LTD - Class A Ordinary Shares
 PTLO|Portillo's Inc. - Class A Common Stock
 PTN|Palatin Technologies, Inc. - Common Stock
 PTON|Peloton Interactive, Inc. - Common Stock
@@ -5641,6 +5639,7 @@ VUZI|Vuzix Corporation - Common Stock
 VVOS|Vivos Therapeutics, Inc. - Common Stock
 VVR|Invesco Senior Income Trust Common Stock (DE)
 VVV|Valvoline Inc. Common Stock
+VVVV|vVARDIS Holding AG Class A Ordinary Shares
 VVX|V2X, Inc. Common Stock
 VWAV|VisionWave Holdings, Inc. - Common Stock
 VYGR|Voyager Therapeutics, Inc. - Common Stock
@@ -5694,7 +5693,7 @@ WFC|Wells Fargo & Company Common Stock
 WFCF|Where Food Comes From, Inc. - Common Stock
 WFF|WF Holding Limited - Ordinary Shares
 WFG|West Fraser Timber Co. Ltd Common stock
-WFRD|Weatherford International plc - Ordinary shares
+WFRD|Weatherford International Corp - Common Stock
 WGO|Winnebago Industries, Inc. Common Stock
 WGS|GeneDx Holdings Corp. - Class A Common Stock
 WH|Wyndham Hotels & Resorts, Inc. Common Stock
@@ -5928,3 +5927,4 @@ ZVRA|Zevra Therapeutics, Inc. - Common Stock
 ZWS|Zurn Elkay Water Solutions Corporation Common Stock
 ZYBT|Zhengye Biotechnology Holding Limited - Class A Ordinary Shares
 ZYME|Zymeworks Inc. - Common Stock
+ZYN|PTL LTD - Class A Ordinary Shares

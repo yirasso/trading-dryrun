@@ -1,74 +1,13 @@
 {
   "start_balance": 100.0,
-  "started": "2026-11-11",
-  "trades": [
-    {
-      "id": "DRYRUN-2026-11-11-AFRM-0950",
-      "date": "2026-11-11",
-      "symbol": "AFRM",
-      "qty": 1,
-      "entry": 67.57,
-      "entry_time": "09:50",
-      "entry_bar": "09:45",
-      "stop": 66.58,
-      "target": 69.55,
-      "max_loss": 0.99,
-      "timemachine": "Leans toward the stop: at 2R the target has to come first in 33 % of the replays that hit one side; it did in 26 % (target first 20.3 % vs stop first 56.7 %).",
-      "status": "closed",
-      "exit": 67.53,
-      "exit_time": "15:55",
-      "exit_reason": "flat by close",
-      "pnl": -0.04
-    },
-    {
-      "id": "DRYRUN-2026-11-12-APLD-0950",
-      "date": "2026-11-12",
-      "symbol": "APLD",
-      "qty": 5,
-      "entry": 17.11,
-      "entry_time": "09:50",
-      "entry_bar": "09:45",
-      "stop": 16.8,
-      "target": 17.73,
-      "max_loss": 1.55,
-      "timemachine": "Leans toward the stop: at 2R the target has to come first in 33 % of the replays that hit one side; it did in 26 % (target first 22.5 % vs stop first 64.4 %).",
-      "status": "closed",
-      "exit": 16.8,
-      "exit_time": "09:55",
-      "exit_reason": "stop",
-      "pnl": -1.55
-    },
-    {
-      "id": "DRYRUN-2026-11-12-DVN-1000",
-      "date": "2026-11-12",
-      "symbol": "DVN",
-      "qty": 1,
-      "entry": 45.47,
-      "entry_time": "10:00",
-      "entry_bar": "09:55",
-      "stop": 45.08,
-      "target": 46.25,
-      "max_loss": 0.39,
-      "timemachine": "Leans toward the stop: at 2R the target has to come first in 33 % of the replays that hit one side; it did in 24 % (target first 17.3 % vs stop first 53.5 %).",
-      "status": "closed",
-      "exit": 46.25,
-      "exit_time": "13:25",
-      "exit_reason": "target",
-      "pnl": 0.78
-    }
-  ],
+  "started": "2026-11-13",
+  "trades": [],
   "days": {
-    "2026-11-11": {
-      "premarket": false,
-      "summary": true,
-      "scans": 1
-    },
-    "2026-11-12": {
+    "2026-11-13": {
       "premarket": true,
-      "summary": true,
-      "scans": 3
+      "summary": false,
+      "scans": 0
     }
   },
-  "universe_date": "2026-11-11",
-  "affordable_date": "2026-11-12"
+  "universe_date": "2026-11-13"
 }

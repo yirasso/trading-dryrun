@@ -16,6 +16,7 @@ import os
 import subprocess
 import sys
 import time
+import urllib.parse
 import urllib.request
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -93,7 +94,7 @@ def journal(date, title, body=""):
 
 def bars_5m(symbol, date):
     """Today's regular-session 5-minute bars: [(start_min_NY, o, h, l, c)]."""
-    url = "https://query2.finance.yahoo.com/v8/finance/chart/%s?interval=5m&range=5d" % symbol
+    url = "https://query2.finance.yahoo.com/v8/finance/chart/%s?interval=5m&range=5d" % urllib.parse.quote(symbol)
     for attempt in range(3):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (dry-run paper trader)"})
@@ -163,13 +164,18 @@ def settle(trade, date, now_min, closes_min, final=False):
 
 def close_trade(trade, outcome, cfg, date):
     reason, price, at = outcome
-    rc, out = tool("trader-broker/ticket.py", "fill", "--symbol", trade["symbol"], "--side", "sell",
-                   "--qty", str(trade["qty"]), "--price", "%.2f" % price, "--date", date)
-    trade.update(status="closed", exit=price, exit_time=at, exit_reason=reason,
-                 pnl=round((price - trade["entry"]) * trade["qty"], 2))
-    log("CLOSED %s %s x%d at %.2f (%s %s): P&L %+.2f" % (
-        date, trade["symbol"], trade["qty"], price, reason, at, trade["pnl"]))
-    journal(date, "Exit %s %s at %s: %s, P&L %+.2f" % (trade["symbol"], reason, at, price, trade["pnl"]), out)
+    if trade.get("kind") == "cfd":                  # no broker tool: the spread was the cost
+        out = "CFD %s: sold %s units at %.2f (mid); spread cost %.2f" % (
+            trade["name"], q(trade["qty"]), price, trade["spread_cost"])
+        pnl = (price - trade["entry"]) * trade["qty"] - trade["spread_cost"]
+    else:
+        rc, out = tool("trader-broker/ticket.py", "fill", "--symbol", trade["symbol"], "--side", "sell",
+                       "--qty", str(trade["qty"]), "--price", "%.2f" % price, "--date", date)
+        pnl = (price - trade["entry"]) * trade["qty"]
+    trade.update(status="closed", exit=price, exit_time=at, exit_reason=reason, pnl=round(pnl, 2))
+    log("CLOSED %s %s x%s at %.2f (%s %s): P&L %+.2f" % (
+        date, label(trade), q(trade["qty"]), price, reason, at, trade["pnl"]))
+    journal(date, "Exit %s %s at %s: %s, P&L %+.2f" % (label(trade), reason, at, price, trade["pnl"]), out)
 
 
 def manage_open(led, cfg, date, now_min, closes_min, final=False):
@@ -222,12 +228,100 @@ def build_affordable(led, cfg, date):
     journal(date, "Affordable universe: %d stocks priced $%.0f-$%.2f" % (len(keep), MIN_PRICE, top))
 
 
+# ------------------------------------------------------------------ CFD mode
+def q(x):
+    return ("%.2f" % x).rstrip("0").rstrip(".") if isinstance(x, float) else str(x)
+
+
+def label(t):
+    return t.get("name") or t["symbol"]
+
+
+def cfd_mode(cfg):
+    return cfg.get("mode") == "cfd"
+
+
+def open_cfd(led, cfg, date, sym, now_min):
+    """Index CFD, like Trading 212's US 500 / US Tech 100: fractional units, leverage, a spread.
+    The pack's trader-budget / trader-risk / trader-broker are built for whole shares on Alpaca,
+    so the same limits are applied here instead."""
+    inst = cfg["instruments"][sym]
+    name = inst["name"]
+    rc, out = tool("trader-entry/entry.py", "check", sym, "--write")
+    ent = jload("trader/entry.json", {})
+    if rc != 0 or ent.get("status") != "triggered" or ent.get("symbol") != sym:
+        return skip(led, date, sym, "entry not triggered", out)
+    trig = hm(ent["bar_start"]) + 5
+    N = "%s %s" % (date, fmt(trig))
+    rc, out_exit = tool("trader-exit/exit.py", "plan", "--write", "--now", N)
+    if rc != 0:
+        return skip(led, date, sym, "exit plan refused", out_exit)
+    _, out_tm = tool("trader-timemachine/timemachine.py", "run", "--write", "--until", FLAT_BY, "--now", N)
+    tm = jload("trader/timemachine.json", {})
+    plan = jload("trader/plan.json", {})
+    entry, stop, target = float(plan["entry"]), float(plan["stop"]), float(plan["target"])
+    spread = float(inst.get("spread", 0))
+    bal = balance(led)
+    usable = bal * (1 - float(cfg.get("cash_buffer_pct", 10)) / 100)
+    lev = float(cfg.get("leverage", 20))
+    max_loss = float(cfg["max_loss_per_trade_usd"])
+    by_risk = max_loss / (entry - stop + spread)            # loss at the stop, spread included
+    by_margin = usable * lev / entry                         # margin = notional / leverage
+    qty = int(min(by_risk, by_margin) * 100) / 100.0         # 0.01-unit steps
+    today = [t for t in led["trades"] if t["date"] == date]
+    lost_today = -sum(min(t.get("pnl") or 0, 0) for t in today)
+    worst = round(qty * (entry - stop + spread), 2)
+    checks = [
+        (hm(cfg.get("no_entries_before", "09:45")) <= trig <= hm(cfg.get("no_entries_after", "15:30")),
+         "outside the entry window"),
+        ((target - entry) / (entry - stop) >= float(cfg.get("min_reward_risk", 1)), "reward:risk too low"),
+        (qty >= 0.01, "too small: under 0.01 units"),
+        (lost_today + worst <= float(cfg.get("max_daily_loss_usd", 15)), "daily loss limit"),
+    ]
+    why = "\n".join("BLOCK: " + m for ok, m in checks if not ok)
+    sizing = ("%s: %s units at %.2f (notional $%.2f, margin $%.2f at %g:1).\n"
+              "Limits: risk $%.2f / (%.2f stop distance + %.2f spread) = %.2f units; "
+              "margin $%.2f x %g / %.2f = %.2f units.\nLoss at the stop about $%.2f, spread cost $%.2f."
+              % (name, q(qty), entry, qty * entry, qty * entry / lev, lev, max_loss, entry - stop, spread,
+                 by_risk, usable, lev, entry, by_margin, worst, qty * spread))
+    if why:
+        return skip(led, date, sym, why.replace("BLOCK: ", ""), sizing + "\n" + why)
+    trade = {"id": "DRYRUN-%s-%s-%s" % (date, sym, fmt(trig).replace(":", "")), "kind": "cfd",
+             "name": name, "date": date, "symbol": sym, "qty": qty, "entry": entry,
+             "entry_time": fmt(trig), "entry_bar": ent["bar_start"], "stop": stop, "target": target,
+             "max_loss": worst, "spread_cost": round(qty * spread, 2),
+             "timemachine": tm.get("verdict"), "status": "open"}
+    led["trades"].append(trade)
+    log("OPEN %s %s x%s at %.2f (%s), stop %.2f, target %.2f" % (
+        date, name, q(qty), entry, fmt(trig), stop, target))
+    journal(date, "Entry %s (CFD) x%s at %.2f (%s ET)" % (name, q(qty), entry, fmt(trig)),
+            "\n\n".join([out, out_exit, out_tm, sizing]))
+    return True
+
+
 # ------------------------------------------------------------------ entries
 def try_entries(led, cfg, date, now_min):
     max_trades = int(cfg.get("max_trades_per_day", 3))
     today = [t for t in led["trades"] if t["date"] == date]
     if len(today) >= max_trades or any(t["status"] == "open" for t in led["trades"]):
         return
+    if cfd_mode(cfg):
+        if not SCANNED:
+            rc, out = tool("trader-scanner/scan.py", "orb", "--symbols", ",".join(cfg["instruments"]),
+                           "--quiet")
+            SCANNED.append(out)
+        wl = jload("trader/watchlist.json", {})
+        if not str(wl.get("as_of", "")).startswith(date):
+            return
+        after = max([hm(t["exit_time"]) for t in today if t.get("exit_time")] or [0])
+        traded = {t["symbol"] for t in today} | set(day(led, date).get("skipped", []))
+        hits = sorted(wl.get("hits") or [], key=lambda h: hm(h.get("bar_start", "23:59")))
+        for h in hits:
+            if h["symbol"] in traded or hm(h["bar_start"]) + 5 <= after:
+                continue
+            if open_cfd(led, cfg, date, h["symbol"], now_min):
+                return True
+        return False
     if led.get("affordable_date") != date or not os.path.exists(AFFORDABLE):
         build_affordable(led, cfg, date)
     if not SCANNED:                                   # one ORB scan per run, reused after an exit
@@ -305,6 +399,11 @@ def open_trade(led, cfg, date, sym, now_min):
 
 # ------------------------------------------------------------------ pre-market / summary
 def premarket(led, date):
+    if cfd_mode(jload(CONFIG, {})):
+        _, news = tool("trader-news/news.py", "--tickers", "SPY", "QQQ", "--hours", "16", "--no-sec")
+        journal(date, "Pre-market news (S&P 500 / Nasdaq-100 ETFs)", news[-5000:])
+        log("Pre-market: index news done.")
+        return
     rc, out = tool("trader-scanner/scan.py", "daily", "--out", "trader/watchlist-daily.json", "--quiet")
     journal(date, "Pre-market daily scan", out[-4000:])
     wl = jload("trader/watchlist-daily.json", {})
@@ -318,7 +417,7 @@ def premarket(led, date):
 def summary(led, date):
     today = [t for t in led["trades"] if t["date"] == date]
     pnl = round(sum(t.get("pnl") or 0 for t in today), 2)
-    lines = ["%s x%d  %s -> %s  %s  %+.2f" % (t["symbol"], t["qty"], t["entry"], t.get("exit"),
+    lines = ["%s x%s  %s -> %s  %s  %+.2f" % (label(t), q(t["qty"]), t["entry"], t.get("exit"),
                                               t.get("exit_reason"), t.get("pnl") or 0) for t in today]
     journal(date, "End of day: %d trades, P&L %+.2f, balance %.2f" % (len(today), pnl, balance(led)),
             "\n".join(lines) or "no trades")
@@ -339,7 +438,7 @@ def write_balance(led):
           "| P&L | **%+.2f (%+.2f%%)** |" % (b - start, (b - start) / start * 100),
           "| Trades closed | %d (%d won, %d lost, %d flat) |" % (
               len(closed), len(wins), len(losses), len(closed) - len(wins) - len(losses)),
-          "| Open now | %s |" % (", ".join("%s x%d @ %.2f" % (t["symbol"], t["qty"], t["entry"])
+          "| Open now | %s |" % (", ".join("%s x%s @ %.2f" % (label(t), q(t["qty"]), t["entry"])
                                          for t in led["trades"] if t["status"] == "open") or "none"),
           "", "## By day", "", "| Day | Trades | P&L | Balance after |", "|---|---|---|---|"]
     running = start
@@ -349,15 +448,17 @@ def write_balance(led):
         running += p
         md.append("| %s | %d | %+.2f | $%s |" % (d, len(ts), p, format(running, ",.2f")))
     md += ["", "## Trades", "",
-           "| Day | Stock | Qty | Entry | Stop | Target | Exit | Why | P&L | Time Machine said |",
+           "| Day | Instrument | Qty | Entry | Stop | Target | Exit | Why | P&L | Time Machine said |",
            "|---|---|---|---|---|---|---|---|---|---|"]
     for t in led["trades"]:
-        md.append("| %s %s | %s | %d | %.2f | %.2f | %.2f | %s | %s | %s | %s |" % (
-            t["date"], t["entry_time"], t["symbol"], t["qty"], t["entry"], t["stop"], t["target"],
+        md.append("| %s %s | %s | %s | %.2f | %.2f | %.2f | %s | %s | %s | %s |" % (
+            t["date"], t["entry_time"], label(t), q(t["qty"]), t["entry"], t["stop"], t["target"],
             t.get("exit", "open"), t.get("exit_reason", ""),
             "%+.2f" % t["pnl"] if t.get("pnl") is not None else "", (t.get("timemachine") or "")[:90]))
     md += ["", "Fills are simulated at the trigger price; stops and targets are played out on",
-           "5-minute bars (stop first when one bar touches both). No slippage, no fees.", ""]
+           "5-minute bars (stop first when one bar touches both). CFD trades pay an estimated spread",
+           "(US 500 0.8 pt, US Tech 100 2 pt), 20:1 leverage, closed by 15:55 NY so no overnight fee.",
+           "Stock trades before the switch paid no fees.", ""]
     with open("BALANCE.md", "w", encoding="utf-8") as fh:
         fh.write("\n".join(md))
 
@@ -385,7 +486,8 @@ def main():
         d = day(led, date)
         if now_min < opens and not d["premarket"]:
             premarket(led, date)
-            build_affordable(led, cfg, date)
+            if not cfd_mode(cfg):
+                build_affordable(led, cfg, date)
             d["premarket"] = True
         if now_min >= opens + 5:
             manage_open(led, cfg, date, now_min, closes)
