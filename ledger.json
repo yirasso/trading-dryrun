@@ -24,6 +24,24 @@
       "exit_time": "10:15",
       "exit_reason": "target",
       "pnl": 8.44
+    },
+    {
+      "id": "DRYRUN-2026-11-16-ES=F-1000",
+      "kind": "cfd",
+      "side": "short",
+      "name": "US 500",
+      "date": "2026-11-16",
+      "symbol": "ES=F",
+      "qty": 0.26,
+      "entry": 7505.0,
+      "entry_time": "10:00",
+      "entry_bar": "09:55",
+      "stop": 7522.5,
+      "target": 7470.0,
+      "max_loss": 4.66,
+      "spread_cost": 0.11,
+      "timemachine": "n/a (short)",
+      "status": "open"
     }
   ],
   "days": {
