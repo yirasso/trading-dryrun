@@ -60,7 +60,7 @@
     },
     "2026-11-16": {
       "premarket": true,
-      "summary": false,
+      "summary": true,
       "scans": 0,
       "skipped": [
         "NQ=F"
