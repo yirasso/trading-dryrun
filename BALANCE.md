@@ -1,14 +1,14 @@
 # Fake balance (dry run, no broker, no real money)
 
-Updated 2026-11-17 15:37 UTC
+Updated 2026-11-17 16:37 UTC
 
 | | |
 |---|---|
 | Start | $100.00 (2026-11-13) |
-| Balance | **$117.39** |
-| P&L | **+17.39 (+17.39%)** |
-| Trades closed | 2 (2 won, 0 lost, 0 flat) |
-| Open now | US Tech 100 x0.04 @ 27175.50 |
+| Balance | **$125.35** |
+| P&L | **+25.35 (+25.35%)** |
+| Trades closed | 3 (3 won, 0 lost, 0 flat) |
+| Open now | none |
 
 ## By day
 
@@ -16,6 +16,7 @@ Updated 2026-11-17 15:37 UTC
 |---|---|---|---|
 | 2026-11-13 | 1 | +8.44 | $108.44 |
 | 2026-11-16 | 1 | +8.95 | $117.39 |
+| 2026-11-17 | 1 | +7.96 | $125.35 |
 
 ## Trades
 
@@ -23,7 +24,7 @@ Updated 2026-11-17 15:37 UTC
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-13 09:50 | US Tech 100 SHORT | 0.03 | 28155.50 | 28297.38 | 27871.74 | 27871.74 | target | +8.44 | n/a (short) |
 | 2026-11-16 10:00 | US 500 SHORT | 0.26 | 7505.00 | 7522.50 | 7470.00 | 7470.0 | target | +8.95 | n/a (short) |
-| 2026-11-17 10:10 | US Tech 100 SHORT | 0.04 | 27175.50 | 27276.00 | 26974.50 | open |  |  | n/a (short) |
+| 2026-11-17 10:10 | US Tech 100 SHORT | 0.04 | 27175.50 | 27276.00 | 26974.50 | 26974.5 | target | +7.96 | n/a (short) |
 
 Fills are simulated at the trigger price; stops and targets are played out on
 5-minute bars (stop first when one bar touches both). CFD costs as in Trading 212's Index CFD
