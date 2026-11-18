@@ -110,7 +110,12 @@
       "max_loss": 4.77,
       "spread_cost": 0.03,
       "timemachine": "n/a (short)",
-      "status": "open"
+      "status": "closed",
+      "fx_fee": 0.02,
+      "exit": 27161.25,
+      "exit_time": "12:25",
+      "exit_reason": "stop",
+      "pnl": -4.78
     }
   ],
   "days": {
