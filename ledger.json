@@ -93,6 +93,24 @@
       "exit_time": "10:00",
       "exit_reason": "stop",
       "pnl": -4.77
+    },
+    {
+      "id": "DRYRUN-2026-11-18-NQ=F-1120",
+      "kind": "cfd",
+      "side": "short",
+      "name": "US Tech 100",
+      "date": "2026-11-18",
+      "symbol": "NQ=F",
+      "qty": 0.03,
+      "entry": 27003.5,
+      "entry_time": "11:20",
+      "entry_bar": "11:15",
+      "stop": 27161.25,
+      "target": 26688.0,
+      "max_loss": 4.77,
+      "spread_cost": 0.03,
+      "timemachine": "n/a (short)",
+      "status": "open"
     }
   ],
   "days": {
