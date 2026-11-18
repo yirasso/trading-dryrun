@@ -96,6 +96,11 @@
       "skipped": [
         "ES=F"
       ]
+    },
+    "2026-11-18": {
+      "premarket": true,
+      "summary": false,
+      "scans": 0
     }
   },
   "universe_date": "2026-11-13"
