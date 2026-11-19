@@ -133,7 +133,12 @@
       "max_loss": 3.39,
       "spread_cost": 0.02,
       "timemachine": "n/a (short)",
-      "status": "open"
+      "status": "closed",
+      "fx_fee": 0.03,
+      "exit": 27228.74,
+      "exit_time": "10:35",
+      "exit_reason": "target",
+      "pnl": 6.68
     }
   ],
   "days": {
@@ -169,7 +174,10 @@
     "2026-11-19": {
       "premarket": true,
       "summary": false,
-      "scans": 0
+      "scans": 0,
+      "skipped": [
+        "ES=F"
+      ]
     }
   },
   "universe_date": "2026-11-13"
