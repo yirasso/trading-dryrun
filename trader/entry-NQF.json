@@ -1,0 +1,22 @@
+{
+  "created_by": "trader-entry",
+  "symbol": "NQ=F",
+  "setup": "orb",
+  "side": "buy",
+  "date": "2026-11-20",
+  "status": "triggered",
+  "time": "9:55 AM",
+  "bar_start": "09:50",
+  "bar_index": 4,
+  "price": 26364.0,
+  "level": 26323.0,
+  "interval": "5m",
+  "opening_range": {
+    "high": 26323.0,
+    "low": 26116.75,
+    "minutes": 15
+  },
+  "source": "yahoo",
+  "checked_at": "2026-11-20T15:37:12Z",
+  "reason": "the 9:50 bar closed above the range high"
+}
