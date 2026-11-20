@@ -204,7 +204,7 @@
     },
     "2026-11-20": {
       "premarket": true,
-      "summary": false,
+      "summary": true,
       "scans": 0,
       "skipped": [
         "ES=F"
