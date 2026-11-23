@@ -51,7 +51,6 @@ ACET|Adicet Bio, Inc. - Common Stock
 ACFN|Acorn Energy, Inc. - Common Stock
 ACGC|ACP Holdings Acquisition Corp. - Class A Ordinary Shares
 ACGL|Arch Capital Group Ltd. - Common Stock
-ACH|Accendra Health, Inc. Common Stock
 ACHC|Acadia Healthcare Company, Inc. - Common Stock
 ACHR|Archer Aviation Inc. Class A Common Stock
 ACI|Albertsons Companies, Inc. Class A Common Stock
@@ -330,6 +329,7 @@ ANNA|AleAnna, Inc. - Class A Common Stock
 ANNX|Annexon, Inc. - common stock
 ANPA|Rich Sparkle Holdings Limited - Ordinary Shares
 ANRO|Alto Neuroscience, Inc. Common Stock
+ANT|Anthropic, PBC - Class A Common Stock
 ANTA|Antalpha Platform Holding Company - Class A Ordinary Shares
 ANTX|AN2 Therapeutics, Inc. - Common Stock
 ANVS|Annovis Bio, Inc. Common Stock
@@ -528,6 +528,7 @@ AVTX|Avalo Therapeutics, Inc. - Common Stock
 AVX|Avax One Technology Ltd. - Common Shares
 AVXL|Anavex Life Sciences Corp. - Common Stock
 AVY|Avery Dennison Corporation Common Stock
+AVZO|Avenzo Therapeutics, Inc. - Common Stock
 AWF|Alliancebernstein Global High Income Fund
 AWI|Armstrong World Industries Inc Common Stock
 AWK|American Water Works Company, Inc. Common Stock
@@ -713,8 +714,7 @@ BIO.B|Bio-Rad Laboratories, Inc. Class B Common Stock
 BIOA|BioAge Labs, Inc. - Common Stock
 BIOT|Instinct Bio Technical Company Holdings Inc. - Common stock
 BIOX|Bioceres Crop Solutions Corp. - Ordinary Shares
-BIP|Brookfield Infrastructure Partners LP Limited Partnership Units
-BIPC|Brookfield Infrastructure Corporation Brookfield Infrastructure Corporation
+BIP|Brookfield Infrastructure Partners Inc. Class A Subordinate Voting Shares
 BIRD|Smartbird, Inc. - Class A Common Stock
 BIRK|Birkenstock Holding plc Ordinary Shares
 BIT|BlackRock Multi-Sector Income Trust Common Shares of Beneficial Interest
@@ -726,8 +726,6 @@ BJDX|Bluejay Diagnostics, Inc. - Common Stock
 BJRI|BJ's Restaurants, Inc. - Common Stock
 BKD|Brookdale Senior Living Inc. Common Stock
 BKE|Buckle, Inc. (The) Common Stock
-BKH|Black Hills Corporation Common Stock
-BKHA|Black Hawk Acquisition Corporation - Class A Ordinary Shares
 BKKT|Bakkt, Inc. Class A Common Stock
 BKNG|Booking Holdings Inc. - Common Stock
 BKR|Baker Hughes Company - Common Stock
@@ -840,6 +838,7 @@ BRN|Barnwell Industries, Inc. Common Stock
 BRNX|BrenX Ltd. - Ordinary Shares
 BRO|Brown & Brown, Inc. Common Stock
 BROS|Dutch Bros Inc. Class A Common Stock
+BRRK|Bluerock Acquisition Corp. II - Class A Ordinary Shares
 BRSL|Brightstar Lottery PLC Trading under the Legal Name to begin at the market open on July 21, 2025. Ordinary Shares
 BRSP|BrightSpire Capital, Inc. Class A Common Stock
 BRT|BRT Apartments Corp. (MD) Common Stock
@@ -1449,6 +1448,7 @@ CZFS|Citizens Financial Services, Inc. - Common Stock
 CZNC|Citizens & Northern Corp - Common Stock
 CZR|Caesars Entertainment, Inc. - Common Stock
 CZWI|Citizens Community Bancorp, Inc. - Common Stock
+CZZL|Cizzle Brands Corporation - Common Stock
 D|Dominion Energy, Inc. Common Stock
 DAAQ|Digital Asset Acquisition Corp. - Class A Ordinary shares
 DAC|Danaos Corporation Common Stock
@@ -1628,7 +1628,6 @@ DUOL|Duolingo, Inc. - Class A Common Stock
 DUOT|Duos Technologies Group, Inc. - Common Stock
 DV|DoubleVerify Holdings, Inc. Common Stock
 DVA|DaVita Inc. Common Stock
-DVLT|Datavault AI Inc. - Common Stock
 DVN|Devon Energy Corporation Common Stock
 DWSN|Dawson Geophysical Company - Common Stock
 DWTX|Dogwood Therapeutics, Inc. - Common Stock
@@ -1872,6 +1871,7 @@ EVO|Evotec SE - American Depositary Shares each representing 1/2 of one ordinary
 EVOX|Evolution Global Acquisition Corp - Class A Ordinary Shares
 EVR|Evercore Inc. Class A Common Stock
 EVRG|Evergy, Inc. - Common Stock
+EVRL|Everli Global Holdings - Class A Ordinary Shares
 EVT|Eaton Vance Tax Advantaged Dividend Income Fund Common Shares of Beneficial Interest
 EVTC|Evertec, Inc. Common Stock
 EVTL|Vertical Aerospace Ltd. Ordinary Shares
@@ -1941,6 +1941,7 @@ FCRS|FutureCrest Acquisition Corp. Class A Ordinary Shares
 FCUV|Focus Universal Inc. - Common Stock
 FCX|Freeport-McMoRan, Inc. Common Stock
 FDBC|Fidelity D & D Bancorp, Inc. - Common Stock
+FDGX|First Digital Acquisition Corp Ltd. - Class A Ordinary Shares
 FDMM|Freedom Metals Acquisition Corp. - Class A Ordinary Shares
 FDMT|4D Molecular Therapeutics, Inc. - Common Stock
 FDS|FactSet Research Systems Inc. Common Stock
@@ -2031,6 +2032,7 @@ FLYX|flyExclusive, Inc. Class A Common Stock
 FMAC|Future Money Acquisition Corporation - Ordinary Shares
 FMAO|Farmers & Merchants Bancorp, Inc. - Common Stock
 FMBH|First Mid Bancshares, Inc. - Common Stock
+FMBM|F&M Bank Corp. Common Stock
 FMC|FMC Corporation Common Stock
 FMFC|Kandal M Venture Limited - Class A ordinary Shares
 FMN|Federated Hermes Premier Municipal Income Fund
@@ -2054,7 +2056,7 @@ FNWD|Finward Bancorp - common stock
 FOA|Finance of America Companies Inc. Class A Common Stock
 FOCL|EDAP TMS S.A. - American Depositary Shares, each representing One Ordinary Share
 FOF|Cohen & Steers Closed-End Opportunity Fund, Inc. Common Stock
-FOFO|Hang Feng Technology Innovation Co., Ltd. - Ordinary Shares
+FOFO|Hang Feng Technology Innovation Co., Ltd. - Class A Ordinary Shares
 FOIL|Londian Wason New Energy Tech Inc. American Depositary Shares, each representing five Ordinary Shares
 FOR|Forestar Group Inc Common Stock
 FORM|FormFactor, Inc. - Common Stock
@@ -2216,7 +2218,7 @@ GERN|Geron Corporation - Common Stock
 GEV|GE Vernova Inc. Common Stock
 GEVO|Gevo, Inc. - Common Stock
 GF|New Germany Fund, Inc. (The) Common Stock
-GFAI|Guardforce AI Co., Limited - Ordinary Shares
+GFAI|Guardforce AI Co., Limited - Class A Ordinary Shares
 GFF|Griffon Corporation Common Stock
 GFI|Gold Fields Limited American Depositary Shares
 GFL|GFL Environmental Inc. Subordinate voting shares, no par value
@@ -2284,7 +2286,7 @@ GLV|Clough Global Dividend and Income Fund Common Shares of beneficial interest
 GLW|Corning Incorporated Common Stock
 GLXG|Galaxy Payroll Group Limited - Class A Ordinary Shares
 GLXY|Galaxy Digital Inc. - Class A common stock
-GM|General Motors Company Common Stock
+GM|General Motors Company - Common Stock
 GMAB|Genmab A/S - American Depositary Shares
 GME|GameStop Corporation Common Stock
 GMED|Globus Medical, Inc. Class A Common Stock
@@ -2390,6 +2392,7 @@ GTN.A|Gray Media, Inc. Class A Common Stock
 GTX|Garrett Motion Inc. - Common Stock
 GTY|Getty Realty Corporation Common Stock
 GUAC|Berto Acquisition Corp. II - Ordinary Shares
+GUER|Guerrilla RF, Inc. - Common Stock
 GUG|Guggenheim Active Allocation Fund Common Shares of Beneficial Interest
 GUNN|Gunnison Copper Corp. American Depositary Shares (each representing thirty (30) Common Shares)
 GURE|Gulf Resources, Inc. - Common Stock
@@ -2604,6 +2607,7 @@ HYNE|Hoyne Bancorp, Inc. - Common Stock
 HYPD|Hyperion DeFi, Inc. - Common Stock
 HYPR|Hyperfine, Inc. - Class A Common Stock
 HYT|Blackrock Corporate High Yield Fund, Inc. Common Stock
+HZN|Bright Horizon Energy Corporation Common Stock
 HZO|MarineMax, Inc. (FL) Common Stock
 IA|Innovative Solutions and Support, Inc. - Common Stock
 IACO|Idea Acquisition Corp. - Class A Ordinary Shares
@@ -2621,7 +2625,6 @@ IBIO|iBio, Inc. - Common Stock
 IBKR|Interactive Brokers Group, Inc. - Class A Common Stock
 IBM|International Business Machines Corporation Common Stock
 IBN|ICICI Bank Limited Common Stock
-IBO|Impact BioMedical, Inc. Common Stock
 IBOC|International Bancshares Corporation Common Stock
 IBP|Installed Building Products, Inc. Common Stock
 IBRX|ImmunityBio, Inc. - Common Stock
@@ -2810,7 +2813,6 @@ ISRG|Intuitive Surgical, Inc. - Common Stock
 ISTR|Investar Holding Corporation - Common Stock
 IT|Gartner, Inc. Common Stock
 ITG|ITG, Inc. - Class A Common Stock
-ITGR|Integer Holdings Corporation Common Stock
 ITHA|ITHAX Acquisition Corp III - Class A Ordinary Shares
 ITIC|Investors Title Company - Common Stock
 ITOC|iTonic Holdings Ltd - Class A Ordinary Shares
@@ -2988,7 +2990,6 @@ KOP|Koppers Holdings Inc. Common Stock
 KOPN|Kopin Corporation - Common Stock
 KOS|Kosmos Energy Ltd. Common Shares (DE)
 KOSS|Koss Corporation - Common Stock
-KOYN|CSLM Digital Asset Acquisition Corp III - Class A Ordinary Shares
 KPET|KPET Ultra Paceline Corporation Class A Ordinary Shares
 KPLT|Katapult Holdings, Inc. - Common Stock
 KPRX|Kiora Pharmaceuticals, Inc. - Common Stock
@@ -3017,7 +3018,6 @@ KSS|Kohl's Corporation Common Stock
 KT|KT Corporation Common Stock
 KTB|Kontoor Brands, Inc. Common Stock
 KTCC|Key Tronic Corporation - Common Stock
-KTF|DWS Municipal Income Trust
 KTOS|Kratos Defense & Security Solutions, Inc. - Common Stock
 KTTA|Pasithea Therapeutics Corp. - Common Stock
 KTWO|K2 Capital Acquisition Corporation - Class A Ordinary Share
@@ -3174,6 +3174,7 @@ LOOP|Loop Industries, Inc. - Common Stock
 LOPE|Grand Canyon Education, Inc. - Common Stock
 LOT|Lotus Technology Inc. - American Depositary Shares
 LOVE|The Lovesac Company - Common Stock
+LOVI|Live Oak Acquisition Corp. VI - Class A Ordinary Shares
 LOW|Lowe's Companies, Inc. Common Stock
 LPA|Logistic Properties of the Americas Ordinary Shares
 LPAA|Launch One Acquisition Corp. - Class A Ordinary Shares
@@ -3229,7 +3230,6 @@ LWLG|Lightwave Logic, Inc. - Common Stock
 LX|LexinFintech Holdings Ltd. - American Depositary Shares
 LXEH|Lixiang Education Holding Co., Ltd. - American Depositary Shares
 LXEO|Lexeo Therapeutics, Inc. - Common Stock
-LXFR|Luxfer Holdings PLC Ordinary Shares
 LXRX|Lexicon Pharmaceuticals, Inc. - Common Stock
 LXU|LSB Industries, Inc. Common Stock
 LYB|LyondellBasell Industries NV Ordinary Shares Class A (Netherlands)
@@ -3249,7 +3249,6 @@ MA|Mastercard Incorporated Common Stock
 MAA|Mid-America Apartment Communities, Inc. Common Stock
 MAAS|Maase Inc. - Class A Ordinary Shares
 MAC|Macerich Company (The) Common Stock
-MACI|Melar Acquisition Corp. I - Class A Ordinary Shares
 MAGH|Magnitude International Ltd - Ordinary Shares
 MAGN|Magnera Corporation Common Stock
 MAIA|MAIA Biotechnology, Inc. Common Stock
@@ -3337,7 +3336,6 @@ MEI|Methode Electronics, Inc. Common Stock
 MELI|MercadoLibre, Inc. - Common Stock
 MENS|Jyong Biotech Ltd. - Ordinary shares
 MEOH|Methanex Corporation - Common Stock
-MERC|Mercer International Inc. - Common Stock
 MESH|Meshflow Acquisition Corp. - Class A Ordinary Shares
 MESO|Mesoblast Limited - American Depositary Shares
 MET|MetLife, Inc. Common Stock
@@ -3446,7 +3444,7 @@ MO|Altria Group, Inc.
 MOB|Mobilicom Limited - Ordinary Shares
 MOBI|Mobia Medical, Inc. - Common Stock
 MOBX|Mobix Labs, Inc. - Class A Common Stock
-MOD|Modine Manufacturing Company Common Stock
+MOD|Modexus Solutions, Inc. Common Stock
 MODD|Modular Medical, Inc. - common stock
 MOG.A|Moog Inc. Class A Common Stock
 MOG.B|Moog Inc. Class B Common Stock
@@ -3833,7 +3831,6 @@ NVX|NOVONIX Limited - American Depository Shares
 NWAX|New America Acquisition I Corp. Class A Common Stock
 NWBI|Northwest Bancshares, Inc. - Common Stock
 NWCL|newcleo plc - Ordinary Shares
-NWE|NorthWestern Energy Group, Inc. - Common Stock
 NWFL|Norwood Financial Corp. - Common Stock
 NWG|NatWest Group plc American Depositary Shares, (each representing two (2) Ordinary Shares)
 NWGL|CL Workshop Group Limited - American Depositary Shares
@@ -3962,7 +3959,6 @@ ONTO|Onto Innovation Inc. Common Stock
 OOMA|Ooma, Inc. Common Stock
 OPAD|Offerpad Solutions Inc. - Class A Common Stock
 OPAL|OPAL Fuels Inc. - Class A Common Stock
-OPAY|OPay Limited American Depositary Shares, each representing ten Ordinary Shares
 OPBK|OP Bancorp - Common Stock
 OPCH|Option Care Health, Inc. - Common Stock
 OPEN|Opendoor Technologies Inc - Common Stock
@@ -4103,7 +4099,6 @@ PCM|PCM Fund, Inc. Common Stock
 PCN|Pimco Corporate & Income Strategy Fund Common Stock
 PCOR|Procore Technologies, Inc. Common Stock
 PCQ|PIMCO California Municipal Income Fund Common Stock
-PCRX|Pacira BioSciences, Inc. - Common Stock
 PCSA|Processa Pharmaceuticals, Inc. - Common Stock
 PCT|PureCycle Technologies, Inc. - Common stock
 PCTY|Paylocity Holding Corporation - Common Stock
@@ -4201,7 +4196,6 @@ PLAY|Dave & Buster's Entertainment, Inc. - Common Stock
 PLBC|Plumas Bancorp - Common Stock
 PLBL|Polibeli Group Ltd - Class A Ordinary Shares
 PLBY|Playboy, Inc. - Common Stock
-PLCE|Children's Place, Inc. (The) - Common Stock
 PLCI|Pelican Acquisition II Corporation - Ordinary Shares
 PLD|Prologis, Inc. Common Stock
 PLG|Platinum Group Metals Ltd. Ordinary Shares (Canada)
@@ -4262,6 +4256,7 @@ PONO|Pono Capital Four, Inc. - Class A Ordinary Shares
 PONY|Pony AI Inc. - American Depositary Shares
 POOL|Pool Corporation - Common Stock
 POR|Portland General Electric Co Common Stock
+PORT|Southport Acquisition Corp. II Class A Ordinary Shares
 POST|Post Holdings, Inc. Common Stock
 POWI|Power Integrations, Inc. - Common Stock
 POWL|Powell Industries, Inc. - Common Stock
@@ -4546,7 +4541,6 @@ RLJ|RLJ Lodging Trust Common Shares of Beneficial Interest $0.01 par value
 RLMD|Relmada Therapeutics, Inc. - Common Stock
 RLTY|Cohen & Steers Real Estate Opportunities and Income Fund Common Shares of Beneficial Interest
 RLX|RLX Technology Inc. American Depositary Shares, each representing the right to receive one (1) Class A ordinary share
-RLYB|Rallybio Corporation - Common Stock
 RM|Regional Management Corp. Common Stock
 RMBI|Richmond Mutual Bancorporation, Inc. - Common Stock
 RMBS|Rambus, Inc. - Common Stock
@@ -4709,7 +4703,6 @@ SCHL|Scholastic Corporation - Common Stock
 SCHW|Charles Schwab Corporation (The) Common Stock
 SCI|Service Corporation International Common Stock
 SCII|SC II Acquisition Corp. - Class A ordinary share
-SCKT|Socket Mobile, Inc. - Common Stock
 SCL|Stepan Company Common Stock
 SCLX|Scilex Holding Company - Common Stock
 SCM|Stellus Capital Investment Corporation Common Stock
@@ -4786,7 +4779,6 @@ SHBI|Shore Bancshares, Inc. - Common Stock
 SHC|Sotera Health Company - Common Stock
 SHEL|Shell PLC American Depositary Shares (each representing two (2) Ordinary Shares)
 SHEN|Shenandoah Telecommunications Co - Common Stock
-SHFS|SHF Holdings, Inc. - Class A Common Stock
 SHG|Shinhan Financial Group Co Ltd American Depositary Shares
 SHIM|Shimmick Corporation - Common Stock
 SHIP|Seanergy Maritime Holdings Corp. - Common Stock
@@ -5001,7 +4993,6 @@ SSNC|SS&C Technologies Holdings, Inc. - Common Stock
 SSP|E.W. Scripps Company (The) - Class A Common Stock
 SSRM|SSR Mining Inc. - Common Stock
 SST|System1, Inc. Class A Common Stock
-SSTI|SoundThinking, Inc. - Common Stock
 SSTK|Shutterstock, Inc. Common Stock
 SSYS|Stratasys, Ltd. - Common Stock
 ST|Sensata Technologies Holding plc Ordinary Shares
@@ -5383,6 +5374,7 @@ TXMD|TherapeuticsMD, Inc. - Common Stock
 TXN|Texas Instruments Incorporated - Common Stock
 TXNM|TXNM Energy, Inc. Common Stock
 TXO|TXO Partners, L.P. Common Units Representing Limited Partner Interests
+TXR|Torex Resources Inc. Common Shares
 TXRH|Texas Roadhouse, Inc. - Common Stock
 TXT|Textron Inc. Common Stock
 TY|Tri Continental Corporation Common Stock
@@ -5485,7 +5477,6 @@ UTI|Universal Technical Institute Inc Common Stock
 UTL|UNITIL Corporation Common Stock
 UTMD|Utah Medical Products, Inc. - Common Stock
 UTSI|UTStarcom Holdings Corp - Ordinary Shares
-UTZ|Utz Brands Inc Class A Common Stock
 UUUU|Energy Fuels Inc Ordinary Shares (Canada)
 UVE|UNIVERSAL INSURANCE HOLDINGS INC Common Stock
 UVSP|Univest Financial Corporation - Common Stock
@@ -5506,7 +5497,6 @@ VANI|Vivani Medical, Inc. - Common Stock
 VATE|INNOVATE Corp. Common Stock
 VBF|Invesco Bond Fund Common Stock
 VBIO|Valion Bio, Inc. - Common stock
-VBNK|VersaBank - Common Shares
 VC|Visteon Corporation - Common Stock
 VCEL|Vericel Corporation - Common Stock
 VCIG|VCI Global Limited - Ordinary Share
@@ -5528,6 +5518,7 @@ VERA|Vera Therapeutics, Inc. - Class A Common Stock
 VERI|Veritone, Inc. - Common Stock
 VERU|Veru Inc. - Common Stock
 VERX|Vertex, Inc. - Class A Common Stock
+VESI|Vesicor Therapeutics Holdings, Inc. - Class A Ordinary Shares
 VET|Vermilion Energy Inc. Common (Canada)
 VFC|V.F. Corporation Common Stock
 VFF|Village Farms International, Inc. - Common Shares
@@ -5608,6 +5599,7 @@ VREX|Varex Imaging Corporation - Common Stock
 VRM|Vroom, Inc. - Common Stock
 VRNS|Varonis Systems, Inc. - Common Stock
 VRRM|Verra Mobility Corporation - Class A Common Stock
+VRSA|Versa Bancorp - Common Stock
 VRSK|Verisk Analytics, Inc. - Common Stock
 VRSN|VeriSign, Inc. - Common Stock
 VRT|Vertiv Holdings, LLC Class A Common Stock
@@ -5779,6 +5771,7 @@ WULF|TeraWulf Inc. - Common Stock
 WVE|Wave Life Sciences, Inc. - Common Stock
 WVVI|Willamette Valley Vineyards, Inc. - Common Stock
 WW|WW International, Inc. - Common Stock
+WWB|Windward Bio Group AG - Common shares
 WWD|Woodward, Inc. - Common Stock
 WWR|Westwater Resources, Inc. Common Stock
 WWW|Wolverine World Wide, Inc. Common Stock
@@ -5911,6 +5904,7 @@ ZLAB|Zai Lab Limited - American Depositary Shares
 ZM|Zoom Communications, Inc. - Class A Common Stock
 ZNB|Zeta Network Group - Class A Ordinary Shares
 ZNTL|Zentalis Pharmaceuticals, Inc. - common stock
+ZOAR|Zoar Limited Ordinary Shares
 ZONE|Zone Frontier Inc. Class B Common Stock
 ZOOZ|ZOOZ Strategy Ltd. - Ordinary Shares
 ZS|Zscaler, Inc. - Common Stock
