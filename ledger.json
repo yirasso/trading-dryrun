@@ -235,7 +235,7 @@
     },
     "2026-11-23": {
       "premarket": true,
-      "summary": false,
+      "summary": true,
       "scans": 0
     }
   },
