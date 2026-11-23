@@ -179,7 +179,12 @@
       "max_loss": 4.37,
       "spread_cost": 0.03,
       "timemachine": "Strongly toward the stop: at 2R the target has to come first in 33 % of the replays that hit one side; it did in 0 % (target first 0.1 % vs stop first 15.8 %).",
-      "status": "open"
+      "status": "closed",
+      "fx_fee": 0.02,
+      "exit": 7224.37,
+      "exit_time": "11:45",
+      "exit_reason": "stop",
+      "pnl": -4.39
     }
   ],
   "days": {
