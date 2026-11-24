@@ -263,7 +263,7 @@
     },
     "2026-11-24": {
       "premarket": true,
-      "summary": false,
+      "summary": true,
       "scans": 0,
       "skipped": [
         "NQ=F"
