@@ -237,6 +237,11 @@
       "premarket": true,
       "summary": true,
       "scans": 0
+    },
+    "2026-11-24": {
+      "premarket": true,
+      "summary": false,
+      "scans": 0
     }
   },
   "universe_date": "2026-11-23"
