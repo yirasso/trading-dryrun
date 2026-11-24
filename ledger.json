@@ -185,6 +185,29 @@
       "exit_time": "11:45",
       "exit_reason": "stop",
       "pnl": -4.39
+    },
+    {
+      "id": "DRYRUN-2026-11-24-ES=F-0950",
+      "kind": "cfd",
+      "side": "long",
+      "name": "US 500",
+      "date": "2026-11-24",
+      "symbol": "ES=F",
+      "qty": 0.16,
+      "entry": 7211.75,
+      "entry_time": "09:50",
+      "entry_bar": "09:45",
+      "stop": 7181.0,
+      "target": 7273.25,
+      "max_loss": 4.99,
+      "spread_cost": 0.07,
+      "timemachine": "Strongly toward the stop: at 2R the target has to come first in 33 % of the replays that hit one side; it did in 18 % (target first 13.7 % vs stop first 64.5 %).",
+      "status": "closed",
+      "fx_fee": 0.02,
+      "exit": 7181.0,
+      "exit_time": "10:30",
+      "exit_reason": "stop",
+      "pnl": -5.01
     }
   ],
   "days": {
@@ -241,7 +264,10 @@
     "2026-11-24": {
       "premarket": true,
       "summary": false,
-      "scans": 0
+      "scans": 0,
+      "skipped": [
+        "NQ=F"
+      ]
     }
   },
   "universe_date": "2026-11-23"
