@@ -1,13 +1,13 @@
 # Fake balance (dry run, no broker, no real money)
 
-Updated 2026-11-25 11:37 UTC
+Updated 2026-11-25 15:37 UTC
 
 | | |
 |---|---|
 | Start | $100.00 (2026-11-13) |
-| Balance | **$108.71** |
-| P&L | **+8.71 (+8.71%)** |
-| Trades closed | 9 (4 won, 5 lost, 0 flat) |
+| Balance | **$104.46** |
+| P&L | **+4.46 (+4.46%)** |
+| Trades closed | 10 (4 won, 6 lost, 0 flat) |
 | Open now | none |
 
 ## By day
@@ -22,6 +22,7 @@ Updated 2026-11-25 11:37 UTC
 | 2026-11-20 | 1 | -4.37 | $118.11 |
 | 2026-11-23 | 1 | -4.39 | $113.72 |
 | 2026-11-24 | 1 | -5.01 | $108.71 |
+| 2026-11-25 | 1 | -4.25 | $104.46 |
 
 ## Trades
 
@@ -36,6 +37,7 @@ Updated 2026-11-25 11:37 UTC
 | 2026-11-20 09:55 | US Tech 100 | 0.03 | 26364.00 | 26219.87 | 26652.26 | 26219.87 | stop | -4.37 | Leans toward the stop: at 2R the target has to come first in 33 % of the replays that hit  |
 | 2026-11-23 10:25 | US 500 | 0.06 | 7296.75 | 7224.37 | 7441.51 | 7224.37 | stop | -4.39 | Strongly toward the stop: at 2R the target has to come first in 33 % of the replays that h |
 | 2026-11-24 09:50 | US 500 | 0.16 | 7211.75 | 7181.00 | 7273.25 | 7181.0 | stop | -5.01 | Strongly toward the stop: at 2R the target has to come first in 33 % of the replays that h |
+| 2026-11-25 10:00 | US Tech 100 | 0.02 | 25459.75 | 25249.25 | 25880.75 | 25249.25 | stop | -4.25 | Strongly toward the stop: at 2R the target has to come first in 33 % of the replays that h |
 
 Fills are simulated at the trigger price; stops and targets are played out on
 5-minute bars (stop first when one bar touches both). CFD costs as in Trading 212's Index CFD

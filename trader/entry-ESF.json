@@ -3,20 +3,20 @@
   "symbol": "ES=F",
   "setup": "orb",
   "side": "buy",
-  "date": "2026-11-24",
+  "date": "2026-11-25",
   "status": "triggered",
-  "time": "9:50 AM",
-  "bar_start": "09:45",
-  "bar_index": 3,
-  "price": 7211.75,
-  "level": 7209.75,
+  "time": "10:05 AM",
+  "bar_start": "10:00",
+  "bar_index": 6,
+  "price": 7070.75,
+  "level": 7065.75,
   "interval": "5m",
   "opening_range": {
-    "high": 7209.75,
-    "low": 7152.25,
+    "high": 7065.75,
+    "low": 6987.75,
     "minutes": 15
   },
   "source": "yahoo",
-  "checked_at": "2026-11-24T15:37:35Z",
-  "reason": "the 9:45 bar closed above the range high"
+  "checked_at": "2026-11-25T15:37:46Z",
+  "reason": "the 10:00 bar closed above the range high"
 }
